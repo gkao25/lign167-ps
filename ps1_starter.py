@@ -4,15 +4,38 @@ import matplotlib.pyplot as plt
 
 #Problem 1
 def compute_slope_estimator(x_vals,y_vals):
+    """
+    Doctest:
+    >>> x = np.array([1, 2, 3, 4, 5])
+    >>> y = np.array([2, 4, 6, 8, 10])
+    >>> compute_slope_estimator(x, y)
+    2.0
+    >>> x = np.array([0, 1, 2])
+    >>> y = np.array([1, 3, 5])
+    >>> compute_slope_estimator(x, y)
+    2.0
+    """
     n = len(x_vals)
     mean_x = np.mean(x_vals)
     mean_y = np.mean(y_vals)
-    top = np.sum(x_vals, y_vals) - n*mean_x*mean_y
-    bottom = np.sum(x_vals) - n*mean_x*mean_x
+    top = np.dot(x_vals, y_vals) - n * mean_x * mean_y
+    bottom = np.sum(x_vals**2) - n * mean_x * mean_x
     return top / bottom
 
 #Problem 2
 def compute_intercept_estimator(x_vals,y_vals):
+    """
+    Doctest:
+    >>> x = np.array([1, 2, 3, 4, 5])
+    >>> y = np.array([2, 4, 6, 8, 10])
+    >>> compute_intercept_estimator(x, y)
+    0.0
+    >>> x = np.array([0, 1, 2])
+    >>> y = np.array([1, 3, 5])
+    >>> compute_intercept_estimator(x, y)
+    1.0
+    """
+
     n = len(x_vals)
     mean_x = np.mean(x_vals)
     mean_y = np.mean(y_vals)
@@ -21,6 +44,17 @@ def compute_intercept_estimator(x_vals,y_vals):
 
 #Problem 3
 def train_model(x_vals,y_vals):
+    """
+    Doctest:
+    >>> x = np.array([1, 2, 3, 4, 5])
+    >>> y = np.array([2, 4, 6, 8, 10])
+    >>> train_model(x, y)
+    (2.0, 0.0)
+    >>> x = np.array([0, 1, 2])
+    >>> y = np.array([1, 3, 5])
+    >>> train_model(x, y)
+    (2.0, 1.0)
+    """
     #your code here
     a = compute_slope_estimator(x_vals, y_vals)
     b = compute_intercept_estimator(x_vals, y_vals)
@@ -28,6 +62,22 @@ def train_model(x_vals,y_vals):
 
 #Problem 4
 def dL_da(x_vals,y_vals,a,b):
+    """
+    Doctest:
+    >>> x = np.array([1, 2, 3])
+    >>> y = np.array([2, 4, 6])
+    >>> a = 2.0
+    >>> b = 0.0
+    >>> dL_da(x, y, a, b)
+    0.0
+    >>> x = np.array([0, 1, 2])
+    >>> y = np.array([1, 3, 5])
+    >>> a = 2.0
+    >>> b = 1.0
+    >>> dL_da(x, y, a, b)
+    0.0
+    """
+
     n = len(x_vals)
     d = np.sum(2*(y_vals-a*x_vals-b)*(-x_vals))
     return 1/n*d
