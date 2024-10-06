@@ -84,12 +84,30 @@ def dL_da(x_vals,y_vals,a,b):
 
 #Problem 5
 def dL_db(x_vals,y_vals,a,b):
+    """
+    >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([1, 2, 3, 4, 5]), 1, 0)
+    np.float64(0.0)
+    >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([2, 2, 2, 2, 2]), 0, 1)
+    np.float64(-2.0)
+    >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([2, 4, 6, 8, 10]), 2, 0)
+    np.float64(0.0)
+    >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([3, 5, 7, 9, 11]), 2, 1)
+    np.float64(0.0)
+    """
     n = len(x_vals)
     d = np.sum(2*(y_vals-a*x_vals-b)*(-1))
     return 1/n*d
 
 #Problem 6
 def gradient_descent_step(x_vals,y_vals,a,b,k=0.01):
+    """
+    Doctest:
+    >>> x_vals = np.array([1, 2, 3])
+    >>> y_vals = np.array([2, 3, 4])
+    >>> gradient_descent_step(x_vals, y_vals, 1, 1, k=0.01)
+    (np.float64(1.0), np.float64(1.0))
+    """
+
     n = len(x_vals)
     a_updated = a - k/n * dL_da(x_vals, y_vals, a, b)
     b_updated = b - k/n * dL_db(x_vals, y_vals, a, b)
@@ -97,10 +115,18 @@ def gradient_descent_step(x_vals,y_vals,a,b,k=0.01):
 
 #Problem 7
 def gradient_descent(x_vals,y_vals,a_0=0,b_0=0,k=1000):
+    """
+    Doctest:
+    >>> x_vals = np.array([1, 2, 3])
+    >>> y_vals = np.array([2, 3, 4])
+    >>> gradient_descent(x_vals, y_vals, 0, 0, 1000)
+    (1.0, 1.0)
+    """
+    
     a_k = a_0
     b_k = b_0
-    for i in range(k):
-        a_k, b_k = gradient_descent_step(x_vals, y_vals, a_0, b_0)
+    for _ in range(k):
+        a_k, b_k = gradient_descent_step(x_vals, y_vals, a_k, b_k)
     return (a_k, b_k)
 
 # Problem 8
