@@ -131,6 +131,14 @@ def gradient_descent(x_vals,y_vals,a_0=0,b_0=0,k=1000):
 
 # Problem 8
 def fit_quadratic(x_vals, y_vals):
+    """
+    Doctest:
+    >>> x_vals = np.array([0, 1, 2])
+    >>> y_vals = np.array([1, 2, 5])
+    >>> fit_quadratic(x_vals, y_vals)
+    (1.0, 1.0)
+    """
+
     n = len(x_vals)
     x_sq = np.square(x_vals)
     a = compute_slope_estimator(x_sq, y_vals)
@@ -139,6 +147,15 @@ def fit_quadratic(x_vals, y_vals):
 
 # Problem 9
 def calculate_scaling_parameters(d_vals, l_vals):
+    """
+    Doctest:
+    >>> x_vals = np.array([1, 2, 3])
+    >>> y_vals = generate_y_vals(x_vals, a=2, b=1, std_dev=0.1)
+    >>> len(y_vals) == len(x_vals)
+    True
+    >>> all(isinstance(y, float) for y in y_vals)
+    True
+    """
     log_d = np.log2(d_vals)
     a, b = np.polyfit(log_d, l_vals, 1)
     return (a, b)
