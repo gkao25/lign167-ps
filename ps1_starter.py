@@ -1,3 +1,17 @@
+"""
+Contributors:    
+
+    - Gloria Kao
+
+    - Ashley Lin
+
+    - Luke Lin
+        - Created doctests for functions 1-4
+        - Validated functionality of functions 1-4
+        - Cross-validated the functions of the other group members and functions 5-9
+        - Assisted with installing anaconda and running correct python distribution
+"""
+
 import numpy as np
 from numpy.random import randn
 import matplotlib.pyplot as plt
