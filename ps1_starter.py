@@ -2,6 +2,8 @@
 Contributors:    
 
     - Gloria Kao
+        - Base code for problems 1-8
+        - Owner of the group GitHub Repo
 
     - Ashley Lin
 
