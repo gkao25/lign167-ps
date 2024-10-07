@@ -6,6 +6,9 @@ Contributors:
         - Owner of the group GitHub Repo
 
     - Ashley Lin
+        - Base code for problem 9
+        - Created doctests for functions 5-9
+        - Cross-validated functions with other group members
 
     - Luke Lin
         - Created doctests for functions 1-4
@@ -102,13 +105,13 @@ def dL_da(x_vals,y_vals,a,b):
 def dL_db(x_vals,y_vals,a,b):
     """
     >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([1, 2, 3, 4, 5]), 1, 0)
-    np.float64(0.0)
+    0.0
     >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([2, 2, 2, 2, 2]), 0, 1)
-    np.float64(-2.0)
+    -2.0
     >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([2, 4, 6, 8, 10]), 2, 0)
-    np.float64(0.0)
+    0.0
     >>> dL_db(np.array([1, 2, 3, 4, 5]), np.array([3, 5, 7, 9, 11]), 2, 1)
-    np.float64(0.0)
+    0.0
     """
     n = len(x_vals)
     d = np.sum(2*(y_vals-a*x_vals-b)*(-1))
@@ -121,7 +124,7 @@ def gradient_descent_step(x_vals,y_vals,a,b,k=0.01):
     >>> x_vals = np.array([1, 2, 3])
     >>> y_vals = np.array([2, 3, 4])
     >>> gradient_descent_step(x_vals, y_vals, 1, 1, k=0.01)
-    (np.float64(1.0), np.float64(1.0))
+    (1.0, 1.0)
     """
 
     n = len(x_vals)
