@@ -134,17 +134,29 @@ def compute_logistic_gradient(a,y,x):
 
 # PROBLEM 5
 def gradient_update(a,lr,gradient):
-    pass # YOUR CODE HERE
+    return a - lr * gradient
 
 # PROBLEM 6
 def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
-    pass # YOUR CODE HERE
+    for _ in range(num_iterations):
+        gradient = compute_logistic_gradient(initial_a, y, x)
+    
+    return gradient_update(initial_a, lr, gradient)
 
 # PROBLEM 7
-# Free Response Answer Here: 
+# Free Response Answer Here:
+'''
+The function __init__ is a constructor that calls its parent class (nn.Module) 
+using super() and initializes a vector of zeroes called weights with the length
+based on the number of features given by the parameter (num_feature).
+'''
 
 # PROBLEM 8
-# Free Response Answer Here: 
+# Free Response Answer Here:
+'''
+The forward method computes the mathematical function for logisitc regression.
+Line 83: prediction = model(d_x), calls the forward function
+'''
 
 # PROBLEM 9
 def batched_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_size=2):
