@@ -148,11 +148,30 @@ def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
 
 # PROBLEM 9
 def batched_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_size=2):
-    pass # YOUR CODE HERE
+    batches = split_into_batches(dataset, batch_size)
+    num_features = extract_num_features(dataset)
+    model = TorchLogisticClassifier(num_features)
+    for i in range(num_epochs):         # epoch loop
+        for batch in batches:           # batch loop
+            # only call backward once per batch per epoch
+            prediction = model(d_x)
+            loss = loss_fn(prediction, d_y)
+            loss.backward()
+            for d_x, d_y in batch:      # loop inside batch
+                
+                
+                loss.backward()
+    return None
 
 # PROBLEMS 10-12
 def split_into_batches(dataset, batch_size):
-    pass
+    k_batches = len(dataset) / batch_size
+    batches = torch.zeros_like(k_batches)
+    i = 0
+    for k in k_batches:
+        batches[k] = dataset[i:1+batch_size]
+        i += batch_size
+    return batches
 
 def alt_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_size=2):
     num_features = extract_num_features(dataset)
