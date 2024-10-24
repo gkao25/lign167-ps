@@ -140,6 +140,7 @@ def gradient_update(a,lr,gradient):
 def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
     for _ in range(num_iterations):
         gradient = compute_logistic_gradient(initial_a, y, x)
+        # inital_a = gradient_update(initial_a, lr, gradient)
     
     return gradient_update(initial_a, lr, gradient)
 
