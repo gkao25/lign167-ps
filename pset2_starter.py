@@ -281,4 +281,7 @@ In this configuration:
 
 This configuration implements batched gradient descent by ensuring that the gradient is 
 computed, applied, and then cleared for each batch within every epoch.
+
+For the arguments, batch size needs to be at least >= 2, and the hyperparameters 
+learning rate and epoch needs to be configured to values that ensure convergence
 """
