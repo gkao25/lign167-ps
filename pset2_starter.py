@@ -1,3 +1,18 @@
+"""
+Gloria:
+    - 
+    - 
+
+Ashley: 
+    -
+
+Luke:
+    - Led the initial implementation of problems 1-4
+    - Wrote graphical tests to validate 6 - 12 
+    - Modified free response (10 - 12) for better clarity
+"""
+
+
 import numpy as np
 import torch
 from torch import nn
@@ -212,25 +227,59 @@ def alt_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_size=
 
 # PROBLEM 10
 # Free Response Answer Here: 
-# loss.backward() calculates the gradient, optimizer.step() updates the parameters, and .zero_grad() resets the gradient
-# so it doesn't accumulate.
-# Uncommenting line A means the parameters are updated only once per epoch loop, so in total num_epochs times. 
-# Same applies for line 1, the gradient is only cleared only per epoch loop, so the gradien will accumulate (sum) 
-# over the whole dataset D. 
-# Let j = # of epoch loops
-# Latex equation: \nabla_{\vec{w}}L(\vec{w}|B) := \frac{1}{j}\sum_{d\in D} \nabla_{\vec{w}}L(\vec{w}|d)
-# Equation 13 is the gradient after each batch. This equation is the gradient after each epoch. 
-# FIXME: summed then divided by the number of epochs?
+"""
+In this gradient descent structure, .backward() calculates the gradient, optimizer.step() 
+updates the model parameters based on the current gradient, and optimizer.zero_grad() 
+resets the gradient to prevent it from accumulating across iterations.
+
+Uncommenting line A for optimizer.step() means parameters are updated only once per epoch, 
+so they would be adjusted a total of num_epochs times. Similarly, uncommenting line 1 for 
+optimizer.zero_grad() resets the gradient only once per epoch, allowing gradients to 
+accumulate over all data points in the dataset before each reset.
+
+Thus, by the end of each epoch, the total gradient used in the update is effectively a 
+summation of gradients over the entire dataset D, averaged across all examples. Letting 
+j denote the total number of epoch loops, the effective gradient applied to update 
+parameters after each epoch can be expressed as:
+
+Latex equation: \nabla_{\vec{w}}L(\vec{w}|B) := \frac{1}{j}\sum_{d\in D} \nabla_{\vec{w}}L(\vec{w}|d)
+
+Equation (13) provides the batch-wise gradient update rule, but the above equation represents the full 
+dataset's gradient after each epoch. Since zero_grad() is called once per epoch, the accumulated gradient 
+is summed over all data points before a reset, with updates occurring only after each epoch loop.
+"""
 
 # PROBLEM 11
 # Free Response Answer Here: 
-# .zero_grad() is never called and .step() is called once per epoch loop, 
-# meaning the gradient will never be cleared and the parameter will be updated based on a summation of the gradients.
-# Latex equation: \nabla_{\vec{w}}L(\vec{w}|B) := \sum_{d\in D} \nabla_{\vec{w}}L(\vec{w}|d)
-# The summation is not divided by the number of epochs because the gradient is never reset after each loop.
+"""
+In this setup, optimizer.zero_grad() is never called, and optimizer.step() is called once per epoch. 
+As a result, gradients are never cleared, and instead, they continue accumulating over all epochs. 
+This means that the parameters are updated based on the summation of all gradients across epochs, 
+without ever resetting in between.
+
+The effective gradient applied to the parameter update after each epoch t can be expressed as:
+
+Latex equation: \nabla_{\vec{w}}L(\vec{w}|B) := \sum_{d\in D} \nabla_{\vec{w}}L(\vec{w}|d)
+
+In this configuration, the gradient calculation does not average over the number of epochs, 
+since it continually accumulates without resetting. Thus, the gradient applied during each 
+parameter update is the cumulative sum of gradients over all data points across all epochs.
+This setup would likely prevent the model from converging properly and would risk diverging 
+or fitting poorly to the data.
+"""
 
 # PROBLEM 12
 # Free Response Answer Here: 
-# Uncommenting 2B would make it mathematically equivalent to batched_gradient_descent.
-# optimizer.zero_grad() is called once per batch per epoch (as required by propblem 9), and it is done after each
-# step (parameter update), so .step() would be in the same loop at line B.
+"""
+Uncommenting lines 2A will make alt_gradient_descent equivalent to batched_gradient_descent.
+
+In this configuration:
+
+- optimizer.zero_grad() is called once per batch within each epoch, ensuring gradients are 
+    reset between batches, as required in Problem 9.
+- optimizer.step() is also called at line B within the batch loop, applying the accumulated 
+    gradient for each batch update.
+
+This configuration implements batched gradient descent by ensuring that the gradient is 
+computed, applied, and then cleared for each batch within every epoch.
+"""
