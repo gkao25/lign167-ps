@@ -1,7 +1,7 @@
 """
 Gloria:
-    - 
-    - 
+    - Base answer for problems 9-12
+    - Helped double check all other problems 
 
 Ashley: 
     -
@@ -157,7 +157,6 @@ def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
     for _ in range(num_iterations):
         gradient = compute_logistic_gradient(a, y, x)
         a = gradient_update(a, lr, gradient)
-    
     return a
 
 # PROBLEM 7
@@ -188,11 +187,11 @@ def batched_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_s
         for batch in batches:           # batch loop
             # only call backward once per batch per epoch
             optimizer.zero_grad()
-            prediction = model(d_x)
-            loss = loss_fn(prediction, d_y)
-            loss.backward()
             for d_x, d_y in batch:      # loop inside batch
-                optimizer.step()
+                prediction = model(d_x)
+                loss = loss_fn(prediction, d_y)
+                loss.backward()
+            optimizer.step()
     return model
 
 # PROBLEMS 10-12
