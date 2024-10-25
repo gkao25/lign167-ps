@@ -138,11 +138,12 @@ def gradient_update(a,lr,gradient):
 
 # PROBLEM 6
 def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
+    a = initial_a
     for _ in range(num_iterations):
-        gradient = compute_logistic_gradient(initial_a, y, x)
-        pred_a = gradient_update(initial_a, lr, gradient)
+        gradient = compute_logistic_gradient(a, y, x)
+        a = gradient_update(a, lr, gradient)
     
-    return pred_a
+    return a
 
 # PROBLEM 7
 # Free Response Answer Here:
@@ -150,13 +151,16 @@ def gradient_descent_logistic(initial_a,lr,num_iterations,y,x):
 The function __init__ is a constructor that calls its parent class (nn.Module) 
 using super() and initializes a vector of zeroes called weights with the length
 based on the number of features given by the parameter (num_feature).
+The function is called at line 78: model = TorchLogisticClassifier(num_features)
 '''
 
 # PROBLEM 8
 # Free Response Answer Here:
 '''
-The forward method computes the mathematical function for logisitc regression.
-Line 83: prediction = model(d_x), calls the forward function
+The forward function is a transformer that calculates the sigmoid of the dot 
+product of the weights parameter and x vector input, or 
+(latex) $\sigma(\vec{w} \cdot \vec{x})$.
+The function is called at line 83: prediction = model(d_x)
 '''
 
 # PROBLEM 9
