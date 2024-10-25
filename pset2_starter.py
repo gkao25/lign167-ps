@@ -271,7 +271,7 @@ or fitting poorly to the data.
 # PROBLEM 12
 # Free Response Answer Here: 
 """
-Uncommenting lines 2A will make alt_gradient_descent equivalent to batched_gradient_descent.
+Uncommenting lines 2B will make alt_gradient_descent equivalent to batched_gradient_descent.
 
 In this configuration:
 
