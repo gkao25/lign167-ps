@@ -4,7 +4,8 @@ Gloria:
     - Helped double check all other problems 
 
 Ashley: 
-    -
+    - Base answer for problems 5-8
+    - Double checked all other problems with groupmates
 
 Luke:
     - Led the initial implementation of problems 1-4
@@ -197,10 +198,10 @@ def batched_gradient_descent(dataset, num_epochs=10, learning_rate=0.01, batch_s
 # PROBLEMS 10-12
 def split_into_batches(dataset, batch_size):
     k_batches = len(dataset) / batch_size
-    batches = torch.zeros_like(k_batches)
+    batches = []
     i = 0
-    for k in k_batches:
-        batches[k] = dataset[i:1+batch_size]
+    for k in range(int(k_batches)):
+        batches.append(dataset[i:i+batch_size])
         i += batch_size
     return batches
 
@@ -282,6 +283,6 @@ In this configuration:
 This configuration implements batched gradient descent by ensuring that the gradient is 
 computed, applied, and then cleared for each batch within every epoch.
 
-For the arguments, batch size needs to be at least >= 2, and the hyperparameters 
-learning rate and epoch needs to be configured to values that ensure convergence
+For the arguments, batch size needs to be the same and at least >= 2. The hyperparameters 
+learning rate and epoch need to be configured to values that ensure convergence.
 """
