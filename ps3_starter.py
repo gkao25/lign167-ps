@@ -94,22 +94,40 @@ def d_loss_d_r0(variable_dict,W1,W2,y_observed):
 
 #Problem 9
 def d_loss_d_W0(variable_dict,W1,W2,y_observed):
-    pass # YOUR CODE HERE
+    d_loss_d_r0_val = d_loss_d_r0(variable_dict, W1, W2, y_observed)
+    x = variable_dict['x']
+    return d_loss_d_r0_val * x
 
 #PROBLEM 10
 class TorchMLP(nn.Module):
     def __init__(self):
-        super().__init__()
-        ##YOUR CODE HERE##
+        super(TorchMLP, self).__init__()
+        self.fc1 = nn.Linear(1, 4)
+        self.fc2 = nn.Linear(4, 2)
+        self.fc3 = nn.Linear(2, 1)
+        self.relu = nn.ReLU()
+
 
     def forward(self, x):
-        pass # YOUR CODE HERE
+        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
 
 # PROBLEM 11
 def torch_loss(y_predicted,y_observed):
-    pass # YOUR CODE HERE
+    return (y_predicted - y_observed) ** 2
 
 # PROBLEM 12
 def torch_compute_gradient(x,y_observed,model):
-    pass # YOUR CODE HERE
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+    
+    optimizer.zero_grad()
+    y_predicted = model(x)
+    loss = criterion(y_predicted, y_observed)
+    loss.backward()
+    optimizer.step()
+    
+    return model
 
