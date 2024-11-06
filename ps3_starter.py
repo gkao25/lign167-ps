@@ -62,19 +62,34 @@ def mlp(x,W0,W1,W2):
 
 #Problem 1
 def d_loss_d_ypredicted(variable_dict,y_observed):
-    pass # YOUR CODE HERE
+    # Calculates partial derivative of loss with respect to y_predicted
+    y_predicted = variable_dict['y_predicted']
+    return 2 * (y_predicted - y_observed)
 
 #Problem 2
 def d_loss_d_W2(variable_dict,y_observed):
-    pass # YOUR CODE HERE
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+
+    h1 = variable_dict['h1']
+
+    # Calculate partial derivatives for each weight in W2
+    d_W2 = np.array([dL * h1[0], dL * h1[1]])
+    return d_W2
 
 #Problem 3
 def d_loss_d_h1(variable_dict,W2,y_observed):
-    pass # YOUR CODE HERE
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    
+    d_h1 = np.array([dL * W2[0], dL * W2[1]])
+    return d_h1
+
 
 #Problem 4
 def relu_derivative(x):
-    pass # YOUR CODE HERE
+    if x > 0:
+        return 1 # Derivative of x with respect to x
+    else:
+        return 0 # Derivative of 0
 
 #Problem 5
 def d_loss_d_r1(variable_dict,W2,y_observed):
