@@ -93,19 +93,34 @@ def relu_derivative(x):
 
 #Problem 5
 def d_loss_d_r1(variable_dict,W2,y_observed):
-    pass # YOUR CODE HERE
+    # TODO: where is W2 used?
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    r1 = variable_dict['r1']
+    d_r1 = np.array([dL*relu_derivative(r1[0]), dL*relu_derivative(r1[1])])
+    return d_r1
 
 #Problem 6
 def d_loss_d_W1(variable_dict,W2,y_observed):
-    pass # YOUR CODE HERE
+    # TODO: where is W2 used?
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    h0 = variable_dict['h0']
+
+    d_W1 = np.array([dL*h0[0], dL*h0[1], dL*h0[2], dL*h0[3]], [dL*h0[0], dL*h0[1], dL*h0[2], dL*h0[3]])
+    return d_W1
 
 #Problem 7
 def d_loss_d_h0(variable_dict,W1,W2,y_observed):
-    pass # YOUR CODE HERE
+    # TODO: where is W2 used?
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    d_h0 = np.array([dL*W1[0], dL*W1[1], dL*W1[2], dL*W1[3]])
+    return d_h0
 
 #Problem 8
 def d_loss_d_r0(variable_dict,W1,W2,y_observed):
-    pass # YOUR CODE HERE
+    # TODO: where is W1 and W2 used?
+    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    r0 = variable_dict['r0']
+    return np.array([dL*relu_derivative(r0[0]), dL*relu_derivative(r0[1]), dL*relu_derivative(r0[2]), dL*relu_derivative(r0[3])])
 
 #Problem 9
 def d_loss_d_W0(variable_dict,W1,W2,y_observed):
