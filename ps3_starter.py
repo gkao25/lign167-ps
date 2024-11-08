@@ -161,10 +161,12 @@ class TorchMLP(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+        r0 = self.W0(x)
+        h0 = self.relu(r0)
+        r1 = self.W1(h0)
+        h1 = self.relu(r1)
+        y_pred = self.W2(h1)
+        return y_pred
 
 # PROBLEM 11
 def torch_loss(y_predicted,y_observed):
