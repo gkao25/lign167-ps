@@ -11,6 +11,7 @@ Ash:
     
 Gloria:
     - Problems 5-8
+    - Organized a group call to ddeliberate our results
 
 Luke:
     - Problems 9-12
