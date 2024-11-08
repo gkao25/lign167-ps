@@ -93,34 +93,42 @@ def relu_derivative(x):
 
 #Problem 5
 def d_loss_d_r1(variable_dict,W2,y_observed):
-    # TODO: where is W2 used?
-    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    dL = d_loss_d_h1(variable_dict, W2, y_observed)
     r1 = variable_dict['r1']
-    d_r1 = np.array([dL*relu_derivative(r1[0]), dL*relu_derivative(r1[1])])
+    d_r1 = np.array([dL[0]*relu_derivative(r1[0]), dL[1]*relu_derivative(r1[1])])
     return d_r1
 
 #Problem 6
 def d_loss_d_W1(variable_dict,W2,y_observed):
-    # TODO: where is W2 used?
-    dL = d_loss_d_ypredicted(variable_dict, y_observed)
+    dL = d_loss_d_r1(variable_dict,W2,y_observed)
     h0 = variable_dict['h0']
 
-    d_W1 = np.array([dL*h0[0], dL*h0[1], dL*h0[2], dL*h0[3]], [dL*h0[0], dL*h0[1], dL*h0[2], dL*h0[3]])
+    d_W1 = np.outer(dL, h0)
     return d_W1
 
 #Problem 7
 def d_loss_d_h0(variable_dict,W1,W2,y_observed):
-    # TODO: where is W2 used?
-    dL = d_loss_d_ypredicted(variable_dict, y_observed)
-    d_h0 = np.array([dL*W1[0], dL*W1[1], dL*W1[2], dL*W1[3]])
+    """
+    >>> variable_dict = {'y_predicted': 2.0, 'r1': np.array([1.0, -1.0])}
+    >>> W1 = np.array([[1.0, 2.0, 3.0, 4.0], [5.0, 6.0, 7.0, 8.0]])
+    >>> W2 = np.array([1.0, 2.0])
+    >>> y_observed = 1.0
+    >>> d_loss_d_h0(variable_dict, W1, W2, y_observed)
+    array([2., 4., 6., 8.])
+    """
+    dL = d_loss_d_r1(variable_dict, W2, y_observed)  #1*2
+    # W1 = np.array([[3,4,5,6],[-5,4,3,-2]]) -> 2*4
+    d_h0 = np.matmul(dL, W1) # we want 1*4
     return d_h0
 
 #Problem 8
 def d_loss_d_r0(variable_dict,W1,W2,y_observed):
-    # TODO: where is W1 and W2 used?
-    dL = d_loss_d_ypredicted(variable_dict, y_observed)
-    r0 = variable_dict['r0']
-    return np.array([dL*relu_derivative(r0[0]), dL*relu_derivative(r0[1]), dL*relu_derivative(r0[2]), dL*relu_derivative(r0[3])])
+    dL = d_loss_d_h0(variable_dict, W1, W2, y_observed) #1*4
+    r0 = variable_dict['r0'] #1*4
+    return np.array([dL[0]*relu_derivative(r0[0]), 
+                     dL[1]*relu_derivative(r0[1]), 
+                     dL[2]*relu_derivative(r0[2]), 
+                     dL[3]*relu_derivative(r0[3])])
 
 #Problem 9
 def d_loss_d_W0(variable_dict,W1,W2,y_observed):
@@ -135,8 +143,7 @@ class TorchMLP(nn.Module):
         self.fc1 = nn.Linear(1, 4)
         self.fc2 = nn.Linear(4, 2)
         self.fc3 = nn.Linear(2, 1)
-        self.relu = nn.ReLU()
-
+        self.relu = relu()
 
     def forward(self, x):
         x = self.relu(self.fc1(x))
