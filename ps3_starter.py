@@ -2,6 +2,21 @@ import numpy as np
 import torch
 from torch import nn
 
+"""
+Contributions
+
+Ash:
+    - Problems 1-4
+    - Helped revise 5-8
+    
+Gloria:
+    - Problems 5-8
+
+Luke:
+    - Problems 9-12
+    - Test code
+
+"""
 
 ######################################## BEGIN STARTER CODE ########################################
 
@@ -140,10 +155,10 @@ def d_loss_d_W0(variable_dict,W1,W2,y_observed):
 class TorchMLP(nn.Module):
     def __init__(self):
         super(TorchMLP, self).__init__()
-        self.fc1 = nn.Linear(1, 4)
-        self.fc2 = nn.Linear(4, 2)
-        self.fc3 = nn.Linear(2, 1)
-        self.relu = relu()
+        self.W0 = nn.Linear(1, 4, bias=False)
+        self.W1 = nn.Linear(4, 2, bias=False)
+        self.W2 = nn.Linear(2, 1, bias=False)
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         x = self.relu(self.fc1(x))
@@ -153,18 +168,13 @@ class TorchMLP(nn.Module):
 
 # PROBLEM 11
 def torch_loss(y_predicted,y_observed):
-    return (y_predicted - y_observed) ** 2
+    loss = (y_predicted - y_observed) ** 2
+    return loss
 
 # PROBLEM 12
 def torch_compute_gradient(x,y_observed,model):
-    criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
-    
-    optimizer.zero_grad()
-    y_predicted = model(x)
-    loss = criterion(y_predicted, y_observed)
+    y_pred = model(x)
+    loss = torch_loss(y_pred, y_observed)
     loss.backward()
-    optimizer.step()
-    
     return model
 
